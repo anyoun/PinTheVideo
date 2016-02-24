@@ -1,0 +1,4 @@
+-e git://github.com/mgan59/python-pinboard.git@v1.1#egg=python-pinboard
+youtube_dl==2014.12.16.2
+python-pushover==0.2
+PyYAML==3.11

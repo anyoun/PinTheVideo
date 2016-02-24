@@ -1,0 +1,17 @@
+pinboard:
+  apiToken: user:1234567890
+  alreadyDownloadedTag: pinthevideo-complete
+  failedDownloadedTag: pinthevideo-failed
+  lastUpdateFile: last_update_time.txt
+  enableDownloads: True
+  urlPatterns:
+  - youtube\.com
+  - youtu\.be
+  - dailymotion\.com
+directories:
+  destination: ./downloads/
+  logDir: .
+pushover:
+  enable: False
+  user: DEVICE_ID_HERE
+  apiToken: API_TOKEN_HERE
