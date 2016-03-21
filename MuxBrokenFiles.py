@@ -1,4 +1,4 @@
-import re, os, os.path, csv, logging
+import re, os, os.path, csv, logging, subprocess, sys
 
 ENABLE_DOWNLOADS = True
 SINGLE_STREAM_FILE_PATTERN = '\.f\d+$'
@@ -12,6 +12,7 @@ class FileToFix:
 
 def getfilesInPath(path):
     files = []
+    path = unicode(path)
     if False:
         with open('filenames.csv', 'rb') as csvfile:
             for row in csv.DictReader(csvfile, delimiter=',', quotechar='"'):
@@ -59,10 +60,13 @@ def fixUnmuxedFiles(path, options):
                 log.debug("%s  %s%s %i", msg, root, ext, f.size)
             if audioFile and videoFile:
                 outputPath = os.path.join(path, k+".mkv")
-                cmd = 'ffmpeg -i "%s" -i "%s" -codec copy "%s"'%(audioFile.path, videoFile.path, outputPath)
-                print cmd
+                #cmd = u'chcp 65001 && ffmpeg -v quiet -i "%s" -i "%s" -codec copy "%s"'%(audioFile.path, videoFile.path, outputPath)
+                cmd = u'ffmpeg -v quiet -i "%s" -i "%s" -codec copy "%s"'%(audioFile.path, videoFile.path, outputPath)
+                #print cmd
                 if ENABLE_DOWNLOADS:
-                    if 0 != os.system(cmd):
+                    #cmd = cmd.encode('UTF-8')
+                    cmd = cmd.encode(sys.getfilesystemencoding())
+                    if 0 != subprocess.call(cmd, shell=True):
                         log.error("Remux failed")
                     else:
                         os.remove(audioFile.path)

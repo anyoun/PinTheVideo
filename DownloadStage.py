@@ -44,7 +44,7 @@ def downloadNewLinksFromPinboard(destinationPath, options):
 
   if last_update_time == pinboard_last_update_time:
     log.info("No changes. Exiting.")
-    exit()
+    return
 
   successfulDownloads = [ ]
   failedDownloads = [ ]
