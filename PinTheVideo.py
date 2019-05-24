@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import logging, datetime, sys, os
-import DownloadStage, MuxBrokenFiles, Notification
+import DownloadStage, MuxBrokenFiles, Notification, PinboardAdaptor
 import yaml
 
 options_dict = {}
@@ -18,8 +18,10 @@ if not os.path.exists(destination):
 
 log.info("Starting with destination = '%s'", destination)
 
+post_adaptor = PinboardAdaptor.PinboardAdaptor(options_dict['pinboard'])
+
 try:
-    DownloadStage.downloadNewLinksFromPinboard(destination, options_dict)
+    DownloadStage.downloadNewLinksFromPinboard(destination, options_dict, post_adaptor)
 except Exception as ex:
     log.exception("DownloadStage failed")
     Notification.send("DownloadStage failed", str(ex), options_dict)
